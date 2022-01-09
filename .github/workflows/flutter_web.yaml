@@ -1,32 +1,12 @@
-name: -WEB- Build and Release
+name: CI
 on:
-    push:
-      branches:
-      - main
-      tags:
-      - '*'
-    workflow_dispatch:
-      tags:
-      - '*'
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 jobs:
   build:
-    name: Build Web and Deploy
-    env:
-      my_secret: ${{secrets.commit_secret}}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
-      - run: flutter config --enable-web
-      - run: flutter build web --release
-      - run: |
-          cd build/web
-          git init
-          git config --global user.email davide.bolzoni59@gmail.com
-          git config --global user.name dbbd59
-          git status
-          git remote add origin https://${{secrets.TOKEN}}@github.com/dbbd59/space_invaders.git
-          git checkout -b gh-pages
-          git add --all
-          git commit -m "update"
-          git push origin gh-pages -f
+      - uses: erickzanardo/flutter-gh-pages@v6
