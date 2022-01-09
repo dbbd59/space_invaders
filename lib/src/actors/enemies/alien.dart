@@ -19,6 +19,26 @@ class Alien extends SpriteComponent
     super.onCollision(intersectionPoints, other);
 
     if (other is PlayerLaser) {
+      final rnd = Random();
+      Vector2 randomVector2() =>
+          (Vector2.random(rnd) - Vector2.random(rnd)) * speed;
+      gameRef.add(
+        ParticleComponent(
+          Particle.generate(
+            generator: (i) => AcceleratedParticle(
+              position: position,
+              acceleration: randomVector2(),
+              child: CircleParticle(
+                paint: Paint()..color = const Color(0xFF46EC4E),
+                radius: 2,
+                lifespan: .1,
+              ),
+            ),
+          ),
+        ),
+      );
+      FlameAudio.play('alien-death.mp3');
+      gameRef.add(Alien());
       gameRef.remove(this);
     }
   }
@@ -40,30 +60,5 @@ class Alien extends SpriteComponent
     position.x = x;
     position.y = y;
     anchor = Anchor.center;
-  }
-
-  @override
-  void onRemove() {
-    final rnd = Random();
-    Vector2 randomVector2() =>
-        (Vector2.random(rnd) - Vector2.random(rnd)) * speed;
-    gameRef.add(
-      ParticleComponent(
-        Particle.generate(
-          generator: (i) => AcceleratedParticle(
-            position: position,
-            acceleration: randomVector2(),
-            child: CircleParticle(
-              paint: Paint()..color = const Color(0xFF46EC4E),
-              radius: 2,
-              lifespan: .1,
-            ),
-          ),
-        ),
-      ),
-    );
-    FlameAudio.play('alien-death.mp3');
-    gameRef.add(Alien());
-    super.onRemove();
   }
 }

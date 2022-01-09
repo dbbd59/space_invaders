@@ -5,9 +5,8 @@ import 'package:flame/parallax.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'actors/enemies/alien.dart';
-import 'actors/player.dart';
+import 'package:space_invaders/src/actors/enemies/alien.dart';
+import 'package:space_invaders/src/actors/player.dart';
 
 class SpaceInvadersGame extends FlameGame with KeyboardEvents, HasCollidables {
   late Player player;
@@ -60,12 +59,24 @@ class SpaceInvadersGame extends FlameGame with KeyboardEvents, HasCollidables {
       baseVelocity: Vector2(0, -50),
     );
     await add(background);
+  }
 
+  Future<void> reset() async {
+    children.whereType<Player>().forEach((player) => remove(player));
+    children.whereType<Alien>().forEach((alien) => remove(alien));
+
+    await init();
+  }
+
+  Future<void> init() async {
     player = Player();
     await add(player);
 
-    await addAll([
+    final aliens = [
       for (var i = 0; i < 5; i++) Alien(),
-    ]);
+    ];
+    await addAll(
+      aliens,
+    );
   }
 }
