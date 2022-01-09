@@ -71,6 +71,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  ficcanaso:
+    dependency: "direct dev"
+    description:
+      name: ficcanaso
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.2"
   file:
     dependency: transitive
     description:
@@ -92,13 +99,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  flame_lint:
-    dependency: "direct dev"
-    description:
-      name: flame_lint
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -225,7 +225,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.2"
   process:
     dependency: transitive
     description:
