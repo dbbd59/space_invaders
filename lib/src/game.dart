@@ -8,8 +8,28 @@ import 'package:flutter/services.dart';
 import 'package:space_invaders/src/actors/enemies/alien.dart';
 import 'package:space_invaders/src/actors/player.dart';
 
-class SpaceInvadersGame extends FlameGame with KeyboardEvents, HasCollidables {
+class SpaceInvadersGame extends FlameGame
+    with PanDetector, TapDetector, KeyboardEvents, HasCollidables {
   late Player player;
+
+  @override
+  bool onTapDown(TapDownInfo event) {
+    player.shoot();
+    return true;
+  }
+
+  @override
+  void onPanUpdate(DragUpdateInfo info) {
+    if (info.raw.delta.dx > 0) {
+      player.velocity = Vector2(1, 0);
+    } else if (info.raw.delta.dx < 0) {
+      player.velocity = Vector2(-1, 0);
+    } else if (info.raw.delta.dy > 0) {
+      player.velocity = Vector2(0, 1);
+    } else if (info.raw.delta.dy < 0) {
+      player.velocity = Vector2(0, -1);
+    }
+  }
 
   @override
   KeyEventResult onKeyEvent(
