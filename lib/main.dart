@@ -6,31 +6,42 @@ import 'src/game.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       home: Scaffold(
-        body: GameWidget(
-          game: SpaceInvadersGame(),
-          initialActiveOverlays: [OverlayStart.ID],
-          overlayBuilderMap: {
-            OverlayStart.ID: (
-              BuildContext context,
-              SpaceInvadersGame gameRef,
-            ) {
-              return OverlayStart(
-                gameRef: gameRef,
-              );
-            },
-            OverlayGameOver.ID: (
-              BuildContext context,
-              SpaceInvadersGame gameRef,
-            ) {
-              return OverlayGameOver(
-                gameRef: gameRef,
-              );
-            },
-          },
-        ),
+        body: GameSpaceInvader(),
       ),
     ),
   );
+}
+
+class GameSpaceInvader extends StatelessWidget {
+  const GameSpaceInvader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GameWidget<SpaceInvadersGame>(
+      game: SpaceInvadersGame(),
+      initialActiveOverlays: [OverlayStart.ID],
+      overlayBuilderMap: {
+        OverlayStart.ID: (
+          BuildContext context,
+          SpaceInvadersGame gameRef,
+        ) {
+          return OverlayStart(
+            gameRef: gameRef,
+          );
+        },
+        OverlayGameOver.ID: (
+          BuildContext context,
+          SpaceInvadersGame gameRef,
+        ) {
+          return OverlayGameOver(
+            gameRef: gameRef,
+          );
+        },
+      },
+    );
+  }
 }
